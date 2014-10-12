@@ -8,27 +8,38 @@
 		var star_list_items = $("li", star_list);
 		var star_list_item_stars = $("i", star_list_items);
 		var star_field = $("input#star-rating-value", container);
-		var clear_value = $("a.clear-button", container);
+		var clear_value_button = $("a.clear-button", container);
 
 		star_list_items
 			.bind("click", function(){
-				var star = $(this).index() + 1;
-				star_field.val(star);
-				$(this).siblings("li").andSelf().each(function(ind){
-					if( ind + 1 <= star ){
-						$("i", this).removeClass('fa-star-o').addClass('fa-star');
-					}else{
-						$("i", this).removeClass('fa-star').addClass('fa-star-o');
+
+				var star_value = $(this).index();
+
+				star_field.val(star_value + 1); // Add 1 because indexes start from 0
+				clearActiveStarClassesFromList();
+
+				star_list_items.each(function(list_index){
+					if( list_index <= star_value ){
+						addActiveStarClass( $("i", this) );
 					}
 				});
+				
 			});
 
-		clear_value
+		clear_value_button
 			.bind("click", function(){
-				star_list_item_stars.removeClass('fa-star').addClass('fa-star-o');
+				clearStarClassesFromList();
 				star_field.val(0);
 				return false;
 			});
+
+		function clearActiveStarClassesFromList(){
+			star_list_item_stars.removeClass('fa-star').addClass('fa-star-o');
+		}
+
+		function addActiveStarClass( el ){
+			el.removeClass('fa-star-o').addClass('fa-star');
+		}
 		
 	}
 	
