@@ -19,5 +19,9 @@ This ACF field type is compatible with:
 3. Create a new field via ACF and select the Star Rating type
 4. Please refer to the A simple star rating field for ACF. for more info regarding the field type settings
 
+### Screenshot
+
+![alt text](http://i.imgur.com/177YpD1.png "Ohhhh, screenshot")
+
 ### Changelog
 Please see `readme.txt` for changelog
