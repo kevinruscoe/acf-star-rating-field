@@ -3,12 +3,15 @@
 	
 	function initialize_field( $el ) {
 
+		console.log( $el );
+
 		var container = $el;
 		var star_list = $("ul", container);
 		var star_list_items = $("li", star_list);
 		var star_list_item_stars = $("i", star_list_items);
 		var star_field = $("input#star-rating-value", container);
 		var clear_value_button = $("a.clear-button", container);
+		var show_clear_button = $("input#allow-zero", container).val();
 
 		star_list_items
 			.bind("click", function(){
@@ -26,11 +29,18 @@
 				
 			});
 
+		if( show_clear_button == 0 ){
+			clear_value_button.hide();
+			star_list.addClass("no-clear-btn");
+		}
+
 		clear_value_button
 			.bind("click", function(){
-				clearStarClassesFromList();
+
+				clearActiveStarClassesFromList();
 				star_field.val(0);
 				return false;
+
 			});
 
 		function clearActiveStarClassesFromList(){

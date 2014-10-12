@@ -44,8 +44,9 @@ class acf_field_star_rating extends acf_field {
 		*/
 		
 		$this->defaults = array(
-			'min_stars'	=> 1,
-			'max_stars' => 5
+			'min_stars'	 => 1,
+			'max_stars'  => 5,
+			'allow_zero' => 1
 		);
 		
 		
@@ -104,16 +105,30 @@ class acf_field_star_rating extends acf_field {
 			'name'			=> 'max_stars'
 		));
 
+		// TODO: make sure value is above zero!!!
+
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Allow Zero?','acf-star_rating'),
+			'instructions'	=> __('Should this field allow zero as a value?','acf-star_rating'),
+			'type'			=> 'radio',
+			'layout'     	=> 'horizontal',
+			'choices' 		=> array(
+				'1' 	=> __('Yes', 'acf'),
+				'0' 	=> __('No', 'acf'),
+			),
+			'name'			=> 'allow_zero'
+		));
+
 		acf_render_field_setting( $field, array(
 			'label'			=> __('Return Formatted List?','acf-star_rating'),
 			'instructions'	=> __('Should this be returned in a Font-Awesome formatted list?','acf-star_rating'),
 			'type'			=> 'radio',
-			'layout'  =>  'horizontal',
-			'choices' =>  array(
-				'1' => __('Yes', 'acf'),
-				'0' => __('No', 'acf'),
+			'layout' 		=> 'horizontal',
+			'choices' 		=> array(
+				'1' 	=> __('Yes', 'acf'),
+				'0' 	=> __('No', 'acf'),
 			),
-			'name'			=> 'return_fa'
+			'name' 			=> 'return_fa'
 		));
 
 	}
@@ -157,6 +172,7 @@ class acf_field_star_rating extends acf_field {
 		<a href='#clear-stars' class='button button-small clear-button'>Clear</a>
 
 		<input type="hidden" id="star-rating-value" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>">
+		<input type="hidden" id="allow-zero" name="<?php echo esc_attr($field['allow_zero']) ?>" value="<?php echo esc_attr($field['allow_zero']) ?>">
 
 		<?php
 	}
@@ -339,7 +355,7 @@ class acf_field_star_rating extends acf_field {
 		
 	function load_value( $value, $post_id, $field ) {
 		
-		return $value;
+		return floatval($value);
 		
 	}
 	
@@ -381,8 +397,6 @@ class acf_field_star_rating extends acf_field {
 	*
 	*  @return	$value (mixed) the modified value
 	*/
-		
-	/*
 	
 	function format_value( $value, $post_id, $field ) {
 		
@@ -393,21 +407,10 @@ class acf_field_star_rating extends acf_field {
 			
 		}
 		
-		
-		// apply setting
-		if( $field['font_size'] > 12 ) { 
-			
-			// format the value
-			// $value = 'something';
-		
-		}
-		
-		
 		// return
-		return $value;
+		return floatval( $value );
+
 	}
-	
-	*/
 	
 	
 	/*
@@ -427,22 +430,21 @@ class acf_field_star_rating extends acf_field {
 	*  @param	$input (string) the corresponding input name for $_POST value
 	*  @return	$valid
 	*/
-	
-	/*
-	
+		
 	function validate_value( $valid, $value, $field, $input ){
 		
 		// Basic usage
-		if( $value < $field['custom_minimum_setting'] )
+		if( $value < $field['min_stars'] )
 		{
-			$valid = false;
+			if( !$field['allow_zero'] )
+			{
+				$valid = __('The value is too little!','acf-star_rating');
+			}
 		}
-		
-		
-		// Advanced usage
-		if( $value < $field['custom_minimum_setting'] )
+
+		if( $value > $field['max_stars'] )
 		{
-			$valid = __('The value is too little!','acf-star_rating'),
+			$valid = __('The value is too large!','acf-star_rating');
 		}
 		
 		
@@ -450,8 +452,6 @@ class acf_field_star_rating extends acf_field {
 		return $valid;
 		
 	}
-	
-	*/
 	
 	
 	/*
@@ -493,15 +493,11 @@ class acf_field_star_rating extends acf_field {
 	*  @return	$field
 	*/
 	
-	/*
-	
 	function load_field( $field ) {
 		
 		return $field;
 		
-	}	
-	
-	*/
+	}
 	
 	
 	/*
@@ -517,15 +513,11 @@ class acf_field_star_rating extends acf_field {
 	*  @return	$field
 	*/
 	
-	/*
-	
 	function update_field( $field ) {
 		
 		return $field;
 		
-	}	
-	
-	*/
+	}
 	
 	
 	/*
