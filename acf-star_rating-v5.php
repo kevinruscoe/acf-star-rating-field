@@ -44,9 +44,7 @@ class acf_field_star_rating extends acf_field {
 		*/
 		
 		$this->defaults = array(
-			'min_stars'	 => 1,
 			'max_stars'  => 5,
-			'allow_zero' => 1
 		);
 		
 		
@@ -92,31 +90,10 @@ class acf_field_star_rating extends acf_field {
 		*/
 
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Minimum Rating','acf-star_rating'),
-			'instructions'	=> __('Minimum number of stars','acf-star_rating'),
-			'type'			=> 'number',
-			'name'			=> 'min_stars'
-		));
-
-		acf_render_field_setting( $field, array(
 			'label'			=> __('Maximum Rating','acf-star_rating'),
 			'instructions'	=> __('Maximum number of stars','acf-star_rating'),
 			'type'			=> 'number',
 			'name'			=> 'max_stars'
-		));
-
-		// TODO: make sure value is above zero!!!
-
-		acf_render_field_setting( $field, array(
-			'label'			=> __('Allow Zero?','acf-star_rating'),
-			'instructions'	=> __('Should this field allow zero as a value?','acf-star_rating'),
-			'type'			=> 'radio',
-			'layout'     	=> 'horizontal',
-			'choices' 		=> array(
-				'1' 	=> __('Yes', 'acf'),
-				'0' 	=> __('No', 'acf'),
-			),
-			'name'			=> 'allow_zero'
 		));
 
 		acf_render_field_setting( $field, array(
@@ -172,7 +149,6 @@ class acf_field_star_rating extends acf_field {
 		<a href='#clear-stars' class='button button-small clear-button'>Clear</a>
 
 		<input type="hidden" id="star-rating-value" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>">
-		<input type="hidden" id="allow-zero" name="<?php echo esc_attr($field['allow_zero']) ?>" value="<?php echo esc_attr($field['allow_zero']) ?>">
 
 		<?php
 	}
@@ -432,15 +408,6 @@ class acf_field_star_rating extends acf_field {
 	*/
 		
 	function validate_value( $valid, $value, $field, $input ){
-		
-		// Basic usage
-		if( $value < $field['min_stars'] )
-		{
-			if( !$field['allow_zero'] )
-			{
-				$valid = __('The value is too little!','acf-star_rating');
-			}
-		}
 
 		if( $value > $field['max_stars'] )
 		{
