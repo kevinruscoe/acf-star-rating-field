@@ -3,8 +3,6 @@
 	
 	function initialize_field( $el ) {
 
-		console.log( $el );
-
 		var container = $el;
 		var star_list = $("ul", container);
 		var star_list_items = $("li", star_list);

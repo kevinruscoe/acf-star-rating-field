@@ -97,15 +97,16 @@ class acf_field_star_rating extends acf_field {
 		));
 
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Return Formatted List?','acf-star_rating'),
-			'instructions'	=> __('Should this be returned in a Font-Awesome formatted list?','acf-star_rating'),
-			'type'			=> 'radio',
+			'label'			=> __('Return Type','acf-star_rating'),
+			'instructions'	=> __('What should be returned?','acf-star_rating'),
+			'type'			=> 'select',
 			'layout' 		=> 'horizontal',
 			'choices' 		=> array(
-				'1' 	=> __('Yes', 'acf'),
-				'0' 	=> __('No', 'acf'),
+				'0' 	=> __('Number', 'num'),
+				'1' 	=> __('List (unstyled)', 'list_u'),
+				'2' 	=> __('List (fa-awesome)', 'list_fa'),
 			),
-			'name' 			=> 'return_fa'
+			'name' 			=> 'return_type'
 		));
 
 	}
@@ -136,12 +137,7 @@ class acf_field_star_rating extends acf_field {
 
 		<ul>
 			<?php for($count = 1; $count < $field['max_stars'] + 1; $count++): ?>
-				<?php 
-					$class = "fa-star-o"; 
-					if( $count <= esc_attr($field['value']) ){
-						$class = "fa-star";
-					}
-				?>
+				<?php $class = ($count <= esc_attr($field['value'])) ? "fa-star" : "fa-star-o"; ?>
 				<li><i class="fa <?php echo $class ?>"></i></li>
 			<?php endfor ?>
 		</ul>
@@ -375,16 +371,57 @@ class acf_field_star_rating extends acf_field {
 	*/
 	
 	function format_value( $value, $post_id, $field ) {
-		
+
 		// bail early if no value
 		if( empty($value) ) {
 		
 			return $value;
 			
 		}
-		
-		// return
-		return floatval( $value );
+
+		switch( $field['return_type'] ){
+			case 0: // num
+				return floatval( $value );
+				break;
+			case 1: // list (unstyled) ?>
+
+				<ul class='star-rating'>
+					<?php for( $i = 1; $i < $field['max_stars'] + 1; $i++ ): ?>
+						<?php $class = ($i <= $value) ? "full" : "blank"; ?>
+						<li class='<?php echo $class ?>'><?php echo $i ?></li>
+					<?php endfor ?>
+				</ul>
+
+			<?php break;
+			case 2: // list (styled) ?>
+
+				<?php
+
+				$dir = plugin_dir_url( __FILE__ );
+
+				// register & include CSS
+				wp_register_style( 'acf-input-star_rating', "{$dir}css/input.css" ); 
+				wp_enqueue_style('acf-input-star_rating');
+
+				?>
+
+				<!-- Get FA -->
+				<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+				<div class="field_type-star_rating">
+
+					<ul>
+						<?php for( $i = 1; $i < $field['max_stars'] + 1; $i++ ): ?>
+							<?php $class = ($i <= $value) ? "fa-star" : "fa-star-o"; ?>
+							<li><i class='fa <?php echo $class ?>'></i></li>
+						<?php endfor ?>
+					</ul>
+
+				</div>
+
+			<?php break;
+
+		}
 
 	}
 	
