@@ -1,6 +1,5 @@
 div.field_type-star_rating {clear:both;}
 div.field_type-star_rating ul {list-style:none;padding:0;font-size:16px;cursor:pointer;}
-div.field_type-star_rating ul.no-clear-btn {height:25px;margin:0;}
 div.field_type-star_rating ul li {line-height:1.6em;float:left;padding-right:5px;}
 div.field_type-star_rating ul li i {cursor:pointer;}
 div.field_type-star_rating a.clear-button {}

@@ -148,7 +148,7 @@ class acf_field_star_rating extends acf_field {
 
 		<a href='#clear-stars' class='button button-small clear-button'>Clear</a>
 
-		<input type="hidden" id="star-rating-value" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>">
+		<input type="hidden" id="star-rating" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>">
 
 		<?php
 	}

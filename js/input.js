@@ -9,7 +9,7 @@
 		var star_list = $("ul", container);
 		var star_list_items = $("li", star_list);
 		var star_list_item_stars = $("i", star_list_items);
-		var star_field = $("input#star-rating-value", container);
+		var star_field = $("input#star-rating", container);
 		var clear_value_button = $("a.clear-button", container);
 
 		star_list_items
