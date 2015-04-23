@@ -11,11 +11,12 @@
 		var clear_value_button = $("a.clear-button", container);
 
 		star_list_items
-			.bind("click", function(){
-
+			.bind("click", function(e){
+				e.preventDefault();
+				
 				var star_value = $(this).index();
 
-				star_field.val(star_value + 1); // Add 1 because indexes start from 0
+				star_field.val(star_value + 1);
 				clearActiveStarClassesFromList();
 
 				star_list_items.each(function(list_index){
@@ -27,12 +28,10 @@
 			});
 
 		clear_value_button
-			.bind("click", function(){
-
+			.bind("click", function(e){
+				e.preventDefault();
 				clearActiveStarClassesFromList();
 				star_field.val(0);
-				return false;
-
 			});
 
 		function clearActiveStarClassesFromList(){

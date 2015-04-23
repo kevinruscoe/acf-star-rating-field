@@ -78,16 +78,6 @@ class acf_field_star_rating extends acf_field {
 	*/
 	
 	function render_field_settings( $field ) {
-		
-		/*
-		*  acf_render_field_setting
-		*
-		*  This function will create a setting for your field. Simply pass the $field parameter and an array of field settings.
-		*  The array of settings does not require a `value` or `prefix`; These settings are found from the $field array.
-		*
-		*  More than one setting can be added by copy/paste the above code.
-		*  Please note that you must also have a matching $defaults value for the field name (font_size)
-		*/
 
 		acf_render_field_setting( $field, array(
 			'label'			=> __('Maximum Rating','acf-star_rating'),
@@ -130,23 +120,30 @@ class acf_field_star_rating extends acf_field {
 	
 	function render_field( $field ) {
 		
-		?>
+		$dir = plugin_dir_url( __FILE__ );
 
-		<!-- Get FA -->
-		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-		<ul>
-			<?php for($count = 1; $count < $field['max_stars'] + 1; $count++): ?>
-				<?php $class = ($count <= esc_attr($field['value'])) ? "fa-star" : "fa-star-o"; ?>
-				<li><i class="fa <?php echo $class ?>"></i></li>
-			<?php endfor ?>
-		</ul>
-
-		<a href='#clear-stars' class='button button-small clear-button'>Clear</a>
-
-		<input type="hidden" id="star-rating" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>">
-
-		<?php
+		// register & include CSS
+		
+		
+		$html = '
+			<div class="field_type-star_rating">
+				%s
+			</div>
+			<a href="#clear-stars" class="button button-small clear-button">Clear</a>
+			<input type="hidden" id="star-rating" name="%s" value="%s">
+		';
+		
+		print sprintf(
+			$html, 
+			$this->make_list( 
+				$field['max_stars'], 
+				$field['value'],
+				'<li><i class="%s star-%d"></i></li>', 
+				array('fa fa-star', 'fa fa-star-o')
+			),
+			esc_attr($field['name']), esc_attr($field['value'])
+		);
+		
 	}
 	
 		
@@ -163,152 +160,16 @@ class acf_field_star_rating extends acf_field {
 	*  @param	n/a
 	*  @return	n/a
 	*/
-
-	
 	
 	function input_admin_enqueue_scripts() {
 		
 		$dir = plugin_dir_url( __FILE__ );
 		
-		
-		// register & include JS
-		wp_register_script( 'acf-input-star_rating', "{$dir}js/input.js" );
-		wp_enqueue_script('acf-input-star_rating');
-		
-		
-		// register & include CSS
-		wp_register_style( 'acf-input-star_rating', "{$dir}css/input.css" ); 
-		wp_enqueue_style('acf-input-star_rating');
-		
+		wp_enqueue_script( 'acf-input-star_rating', "{$dir}js/input.js" );
+		wp_enqueue_style( 'font-awesome', "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+		wp_enqueue_style( 'acf-input-star_rating', "{$dir}css/input.css" ); 
 		
 	}
-	
-	
-	
-	
-	/*
-	*  input_admin_head()
-	*
-	*  This action is called in the admin_head action on the edit screen where your field is created.
-	*  Use this action to add CSS and JavaScript to assist your render_field() action.
-	*
-	*  @type	action (admin_head)
-	*  @since	3.6
-	*  @date	23/01/13
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
-
-	/*
-		
-	function input_admin_head() {
-	
-		
-		
-	}
-	
-	*/
-	
-	
-	/*
-   	*  input_form_data()
-   	*
-   	*  This function is called once on the 'input' page between the head and footer
-   	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and 
-   	*  'acf/input_admin_head' actions because ACF did not know it was going to be used. These situations are
-   	*  seen on comments / user edit forms on the front end. This function will always be called, and includes
-   	*  $args that related to the current screen such as $args['post_id']
-   	*
-   	*  @type	function
-   	*  @date	6/03/2014
-   	*  @since	5.0.0
-   	*
-   	*  @param	$args (array)
-   	*  @return	n/a
-   	*/
-   	
-   	/*
-   	
-   	function input_form_data( $args ) {
-	   	
-		
-	
-   	}
-   	
-   	*/
-	
-	
-	/*
-	*  input_admin_footer()
-	*
-	*  This action is called in the admin_footer action on the edit screen where your field is created.
-	*  Use this action to add CSS and JavaScript to assist your render_field() action.
-	*
-	*  @type	action (admin_footer)
-	*  @since	3.6
-	*  @date	23/01/13
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
-
-	/*
-		
-	function input_admin_footer() {
-	
-		
-		
-	}
-	
-	*/
-	
-	
-	/*
-	*  field_group_admin_enqueue_scripts()
-	*
-	*  This action is called in the admin_enqueue_scripts action on the edit screen where your field is edited.
-	*  Use this action to add CSS + JavaScript to assist your render_field_options() action.
-	*
-	*  @type	action (admin_enqueue_scripts)
-	*  @since	3.6
-	*  @date	23/01/13
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
-
-	/*
-	
-	function field_group_admin_enqueue_scripts() {
-		
-	}
-	
-	*/
-
-	
-	/*
-	*  field_group_admin_head()
-	*
-	*  This action is called in the admin_head action on the edit screen where your field is edited.
-	*  Use this action to add CSS and JavaScript to assist your render_field_options() action.
-	*
-	*  @type	action (admin_head)
-	*  @since	3.6
-	*  @date	23/01/13
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
-
-	/*
-	
-	function field_group_admin_head() {
-	
-	}
-	
-	*/
-
 
 	/*
 	*  load_value()
@@ -324,7 +185,7 @@ class acf_field_star_rating extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$value
 	*/
-		
+	
 	function load_value( $value, $post_id, $field ) {
 		
 		return floatval($value);
@@ -383,43 +244,37 @@ class acf_field_star_rating extends acf_field {
 			case 0: // num
 				return floatval( $value );
 				break;
-			case 1: // list (unstyled) ?>
-
-				<ul class='star-rating'>
-					<?php for( $i = 1; $i < $field['max_stars'] + 1; $i++ ): ?>
-						<?php $class = ($i <= $value) ? "full" : "blank"; ?>
-						<li class='<?php echo $class ?>'><?php echo $i ?></li>
-					<?php endfor ?>
-				</ul>
-
-			<?php break;
-			case 2: // list (styled) ?>
-
-				<?php
-
+			case 1:
+				return $this->make_list( 
+					$field['max_stars'], 
+					$value,
+					'<li class="%s">%d</li>', 
+					array('empty', 'blank')
+				);
+				break;
+			case 2:
+			
 				$dir = plugin_dir_url( __FILE__ );
 
-				// register & include CSS
-				wp_register_style( 'acf-input-star_rating', "{$dir}css/input.css" ); 
-				wp_enqueue_style('acf-input-star_rating');
-
-				?>
-
-				<!-- Get FA -->
-				<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-				<div class="field_type-star_rating">
-
-					<ul>
-						<?php for( $i = 1; $i < $field['max_stars'] + 1; $i++ ): ?>
-							<?php $class = ($i <= $value) ? "fa-star" : "fa-star-o"; ?>
-							<li><i class='fa <?php echo $class ?>'></i></li>
-						<?php endfor ?>
-					</ul>
-
-				</div>
-
-			<?php break;
+				wp_enqueue_style( 'acf-input-star_rating', "{$dir}css/input.css" ); 
+				wp_enqueue_style( 'font-awesome', "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+				
+				$html = '
+					<div class="field_type-star_rating">
+						%s
+					</div>
+				';
+				
+				return sprintf(
+					$html, 
+					$this->make_list( 
+						$field['max_stars'], 
+						$value,
+						'<li><i class="%s star-%d"></i></li>', 
+						array('fa fa-star', 'fa fa-star-o') 
+					)
+				);
+				break;
 
 		}
 
@@ -451,38 +306,9 @@ class acf_field_star_rating extends acf_field {
 			$valid = __('The value is too large!','acf-star_rating');
 		}
 		
-		
-		// return
 		return $valid;
 		
 	}
-	
-	
-	/*
-	*  delete_value()
-	*
-	*  This action is fired after a value has been deleted from the db.
-	*  Please note that saving a blank value is treated as an update, not a delete
-	*
-	*  @type	action
-	*  @date	6/03/2014
-	*  @since	5.0.0
-	*
-	*  @param	$post_id (mixed) the $post_id from which the value was deleted
-	*  @param	$key (string) the $meta_key which the value was deleted
-	*  @return	n/a
-	*/
-	
-	/*
-	
-	function delete_value( $post_id, $key ) {
-		
-		
-		
-	}
-	
-	*/
-	
 	
 	/*
 	*  load_field()
@@ -523,30 +349,29 @@ class acf_field_star_rating extends acf_field {
 		
 	}
 	
-	
 	/*
-	*  delete_field()
+	* make_list()
 	*
-	*  This action is fired after a field is deleted from the database
+	* Create a HTML list
 	*
-	*  @type	action
-	*  @date	11/02/2014
-	*  @since	5.0.0
-	*
-	*  @param	$field (array) the field array holding all the field options
-	*  @return	n/a
+	* @return $html (string)
 	*/
 	
-	/*
-	
-	function delete_field( $field ) {
+	function make_list($max_stars, $current_star, $li, $classes )
+	{
 		
+		$html = '<ul class="star-rating">';
 		
+		for( $index = 1; $index < $max_stars + 1; $index++ ):
+			$class = ($index <= $current_star) ? $classes[0] : $classes[1];
+			$html .= sprintf($li, $class, $index);
+		endfor;
+				
+		$html .= "</ul>";
 		
-	}	
-	
-	*/
-	
+		return $html;
+		
+	}
 	
 }
 
