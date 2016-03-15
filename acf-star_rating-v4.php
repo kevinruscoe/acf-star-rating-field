@@ -23,9 +23,8 @@ class acf_field_star_rating extends acf_field {
 		$this->label = __('Star Rating');
 		$this->category = __("Content",'acf'); // Basic, Content, Choice, etc
 		$this->defaults = array(
-			// add default here to merge into your field. 
-			// This makes life easy when creating the field options as you don't need to use any if( isset('') ) logic. eg:
-			//'preview_size' => 'thumbnail'
+			'max_stars'  => 5,
+			'return_type' => 2,
 		);
 		
 		
@@ -58,10 +57,7 @@ class acf_field_star_rating extends acf_field {
 	
 	function create_options( $field )
 	{
-		// defaults?
-		/*
 		$field = array_merge($this->defaults, $field);
-		*/
 		
 		// key is needed in the field names to correctly save the data
 		$key = $field['name'];
@@ -71,20 +67,38 @@ class acf_field_star_rating extends acf_field {
 		?>
 <tr class="field_option field_option_<?php echo $this->name; ?>">
 	<td class="label">
-		<label><?php _e("Preview Size",'acf'); ?></label>
-		<p class="A simple star rating field for ACF."><?php _e("Thumbnail is advised",'acf'); ?></p>
+		<label><?php _e("Maximum Rating",'acf-star_rating'); ?></label>
+		<p class="description"><?php _e("Maximum number of stars",'acf-star_rating'); ?></p>
 	</td>
 	<td>
 		<?php
 		
 		do_action('acf/create_field', array(
-			'type'		=>	'radio',
-			'name'		=>	'fields['.$key.'][preview_size]',
-			'value'		=>	$field['preview_size'],
+			'type'		=>	'number',
+			'name'		=>	'fields['.$key.'][max_stars]',
+			'value'		=>	$field['max_stars'],
+		));
+
+		?>
+	</td>
+</tr>
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+	<td class="label">
+		<label><?php _e("Return Type",'acf-star_rating'); ?></label>
+		<p class="description"><?php _e("What should be returned?",'acf-star_rating'); ?></p>
+	</td>
+	<td>
+		<?php
+
+		do_action('acf/create_field', array(
+			'type'		=>	'select',
+			'name'		=>	'fields['.$key.'][return_type]',
+			'value'		=>	$field['return_type'],
 			'layout'	=>	'horizontal',
 			'choices'	=>	array(
-				'thumbnail' => __('Thumbnail'),
-				'something_else' => __('Something Else'),
+				'0' 	=> __('Number', 'num'),
+				'1' 	=> __('List (unstyled)', 'list_u'),
+				'2' 	=> __('List (fa-awesome)', 'list_fa'),
 			)
 		));
 		
@@ -110,20 +124,28 @@ class acf_field_star_rating extends acf_field {
 	
 	function create_field( $field )
 	{
-		// defaults?
-		/*
-		$field = array_merge($this->defaults, $field);
-		*/
 		
-		// perhaps use $field['preview_size'] to alter the markup?
+		$dir = plugin_dir_url( __FILE__ );
+
+		// register & include CSS
+		$html = '
+			<div class="field_type-star_rating">
+				%s
+			</div>
+			<a href="#clear-stars" class="button button-small clear-button">Clear</a>
+			<input type="hidden" id="star-rating" name="%s" value="%s">
+		';
 		
-		
-		// create Field HTML
-		?>
-		<div>
-			
-		</div>
-		<?php
+		print sprintf(
+			$html,
+			$this->make_list(
+				$field['max_stars'],
+				$field['value'],
+				'<li><i class="%s star-%d"></i></li>',
+				array('fa fa-star', 'fa fa-star-o')
+			),
+			esc_attr($field['name']), esc_attr($field['value'])
+		);
 	}
 	
 	
@@ -145,75 +167,13 @@ class acf_field_star_rating extends acf_field {
 		
 		
 		// register ACF scripts
-		wp_register_script( 'acf-input-star_rating', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
-		wp_register_style( 'acf-input-star_rating', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
+		$dir = plugin_dir_url( __FILE__ );
+		
+		wp_enqueue_script( 'acf-input-star_rating', "{$dir}js/input.js" );
+		wp_enqueue_style( 'font-awesome', "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+		wp_enqueue_style( 'acf-input-star_rating', "{$dir}css/input.css" );
 		
 		
-		// scripts
-		wp_enqueue_script(array(
-			'acf-input-star_rating',	
-		));
-
-		// styles
-		wp_enqueue_style(array(
-			'acf-input-star_rating',	
-		));
-		
-		
-	}
-	
-	
-	/*
-	*  input_admin_head()
-	*
-	*  This action is called in the admin_head action on the edit screen where your field is created.
-	*  Use this action to add CSS and JavaScript to assist your create_field() action.
-	*
-	*  @info	http://codex.wordpress.org/Plugin_API/Action_Reference/admin_head
-	*  @type	action
-	*  @since	3.6
-	*  @date	23/01/13
-	*/
-
-	function input_admin_head()
-	{
-		// Note: This function can be removed if not used
-	}
-	
-	
-	/*
-	*  field_group_admin_enqueue_scripts()
-	*
-	*  This action is called in the admin_enqueue_scripts action on the edit screen where your field is edited.
-	*  Use this action to add CSS + JavaScript to assist your create_field_options() action.
-	*
-	*  $info	http://codex.wordpress.org/Plugin_API/Action_Reference/admin_enqueue_scripts
-	*  @type	action
-	*  @since	3.6
-	*  @date	23/01/13
-	*/
-
-	function field_group_admin_enqueue_scripts()
-	{
-		// Note: This function can be removed if not used
-	}
-
-	
-	/*
-	*  field_group_admin_head()
-	*
-	*  This action is called in the admin_head action on the edit screen where your field is edited.
-	*  Use this action to add CSS and JavaScript to assist your create_field_options() action.
-	*
-	*  @info	http://codex.wordpress.org/Plugin_API/Action_Reference/admin_head
-	*  @type	action
-	*  @since	3.6
-	*  @date	23/01/13
-	*/
-
-	function field_group_admin_head()
-	{
-		// Note: This function can be removed if not used
 	}
 
 
@@ -235,8 +195,7 @@ class acf_field_star_rating extends acf_field {
 	
 	function load_value( $value, $post_id, $field )
 	{
-		// Note: This function can be removed if not used
-		return $value;
+		return floatval($value);
 	}
 	
 	
@@ -258,8 +217,7 @@ class acf_field_star_rating extends acf_field {
 	
 	function update_value( $value, $post_id, $field )
 	{
-		// Note: This function can be removed if not used
-		return $value;
+		return floatval( $value );
 	}
 	
 	
@@ -281,16 +239,7 @@ class acf_field_star_rating extends acf_field {
 	
 	function format_value( $value, $post_id, $field )
 	{
-		// defaults?
-		/*
-		$field = array_merge($this->defaults, $field);
-		*/
-		
-		// perhaps use $field['preview_size'] to alter the $value?
-		
-		
-		// Note: This function can be removed if not used
-		return $value;
+		return floatval( $value );
 	}
 	
 	
@@ -312,16 +261,12 @@ class acf_field_star_rating extends acf_field {
 	
 	function format_value_for_api( $value, $post_id, $field )
 	{
-		// defaults?
-		/*
-		$field = array_merge($this->defaults, $field);
-		*/
+		if( $value > $field['max_stars'] )
+		{
+			$valid = __('The value is too large!','acf-star_rating');
+		}
 		
-		// perhaps use $field['preview_size'] to alter the $value?
-		
-		
-		// Note: This function can be removed if not used
-		return $value;
+		return $valid;
 	}
 	
 	
@@ -365,6 +310,30 @@ class acf_field_star_rating extends acf_field {
 	{
 		// Note: This function can be removed if not used
 		return $field;
+	}
+
+	/*
+	* make_list()
+	*
+	* Create a HTML list
+	*
+	* @return $html (string)
+	*/
+
+	function make_list($max_stars, $current_star, $li, $classes )
+	{
+
+		$html = '<ul class="star-rating">';
+
+		for( $index = 1; $index < $max_stars + 1; $index++ ):
+			$class = ($index <= $current_star) ? $classes[0] : $classes[1];
+			$html .= sprintf($li, $class, $index);
+		endfor;
+
+		$html .= "</ul>";
+
+		return $html;
+
 	}
 
 	
