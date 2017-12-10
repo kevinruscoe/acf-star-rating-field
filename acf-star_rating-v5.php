@@ -359,18 +359,19 @@ class acf_field_star_rating extends acf_field {
 	
 	function make_list($max_stars, $current_star, $li, $classes )
 	{
-		$rounded_star = round($current_star * 2) / 2; 
+		$rounded_star = round($current_star * 2) / 2;
+		$is_half = $current_star != round($current_star * 2);
 		
 		$html = '<ul class="star-rating">';
 		
 		for( $index = 1; $index < $max_stars + 1; $index++ ):
-			// if whole star
-			if (round($rounded_star, 0) == $rounded_star) {
-				$class = ($index <= $rounded_star) ? $classes[0] : $classes[1];	
-			} else {
-				$class = ($index <= $rounded_star) ? $classes[0] : $classes[2];	
+			$class = $classes[1];
+			if ($index <= $rounded_star) {
+				$class = $classes[0];				
+			} else if ($is_half && $index <= $rounded_star + 1) {
+				$class = $classes[2];				
 			}
-			
+
 			$html .= sprintf($li, $class, $index);
 		endfor;
 				
