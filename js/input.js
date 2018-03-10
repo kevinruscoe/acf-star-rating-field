@@ -14,15 +14,28 @@
 			.bind("click", function(e){
 				e.preventDefault();
 				
+				// calculate star value
 				var star_value = $(this).index();
+				var width = $(this).innerWidth();
+				var offset = $(this).offset(); 
+				var isHalf = (width / 2) > (e.pageX - offset.left);
+
+				if (isHalf) {
+					// left side clicked, only half star
+					star_value -= 0.5;
+				}
 
 				star_field.val(star_value + 1);
 				clearActiveStarClassesFromList();
 
 				star_list_items.each(function(list_index){
+					
 					if( list_index <= star_value ){
 						addActiveStarClass( $("i", this) );
+					} else if(isHalf && list_index <= star_value + 1){
+						addHalfActiveStarClass( $("i", this) );
 					}
+
 				});
 				
 			});
@@ -35,11 +48,15 @@
 			});
 
 		function clearActiveStarClassesFromList(){
-			star_list_item_stars.removeClass('fa-star').addClass('fa-star-o');
+			star_list_item_stars.removeClass('fa-star').removeClass('fa-star-half-o').addClass('fa-star-o');
 		}
 
 		function addActiveStarClass( el ){
-			el.removeClass('fa-star-o').addClass('fa-star');
+			el.removeClass('fa-star-o').removeClass('fa-star-half-o').addClass('fa-star');
+		}
+
+		function addHalfActiveStarClass( el ){
+			el.removeClass('fa-star-o').removeClass('fa-star').addClass('fa-star-half-o');
 		}
 		
 	}

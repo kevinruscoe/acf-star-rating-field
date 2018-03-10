@@ -139,7 +139,7 @@ class acf_field_star_rating extends acf_field {
 				$field['max_stars'], 
 				$field['value'],
 				'<li><i class="%s star-%d"></i></li>', 
-				array('fa fa-star', 'fa fa-star-o')
+				array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o')
 			),
 			esc_attr($field['name']), esc_attr($field['value'])
 		);
@@ -249,7 +249,7 @@ class acf_field_star_rating extends acf_field {
 					$field['max_stars'], 
 					$value,
 					'<li class="%s">%d</li>', 
-					array('empty', 'blank')
+					array('empty', 'blank', 'half')
 				);
 				break;
 			case 2:
@@ -271,7 +271,7 @@ class acf_field_star_rating extends acf_field {
 						$field['max_stars'], 
 						$value,
 						'<li><i class="%s star-%d"></i></li>', 
-						array('fa fa-star', 'fa fa-star-o') 
+						array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o') 
 					)
 				);
 				break;
@@ -359,11 +359,18 @@ class acf_field_star_rating extends acf_field {
 	
 	function make_list($max_stars, $current_star, $li, $classes )
 	{
+		$is_half = $current_star != round($current_star);
 		
 		$html = '<ul class="star-rating">';
 		
 		for( $index = 1; $index < $max_stars + 1; $index++ ):
-			$class = ($index <= $current_star) ? $classes[0] : $classes[1];
+			$class = $classes[1];
+			if ($index <= $current_star) {
+				$class = $classes[0];				
+			} else if ($is_half && $index <= $current_star + 1) {
+				$class = $classes[2];				
+			}
+
 			$html .= sprintf($li, $class, $index);
 		endfor;
 				
