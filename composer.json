@@ -1,0 +1,13 @@
+{
+    "name": "kevinruscoe/acf-star-rating",
+    "description": "A simple star rating field for ACF.",
+    "type": "acf-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Ruscoe",
+            "email": "hello@kevinruscoe.me"
+        }
+    ],
+    "require": {}
+}
