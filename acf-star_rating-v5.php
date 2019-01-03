@@ -129,7 +129,7 @@ class acf_field_star_rating extends acf_field {
 			<div class="field_type-star_rating">
 				%s
 			</div>
-			<a href="#clear-stars" class="button button-small clear-button">Clear</a>
+			<a href="#clear-stars" class="button button-small clear-button">.__('Clear','acf-star_rating').</a>
 			<input type="hidden" id="star-rating" name="%s" value="%s">
 		';
 		
