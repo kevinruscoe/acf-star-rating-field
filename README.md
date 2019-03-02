@@ -10,7 +10,6 @@ A simple star rating field for ACF.
 
 This ACF field type is compatible with:
 * ACF 5
-* ACF 4 (not yet)
 
 ## Usage
 
