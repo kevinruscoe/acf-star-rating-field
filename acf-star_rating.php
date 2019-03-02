@@ -19,5 +19,7 @@ add_action('acf/include_field_types', function () {
 });
 
 add_action('acf/register_fields', function () {
-    include_once('acf-star_rating-v4.php');
+    include_once('AcfStarRating4.php');
+    
+    new AcfStarRating5();
 });
