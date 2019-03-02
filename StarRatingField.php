@@ -17,7 +17,7 @@ class StarRatingField extends acf_field
     {
         $this->name = 'star_rating_field';
         
-        $this->label = __('Star Rating Field', 'acf-star_rating_field');
+        $this->label = __('Star Rating', 'acf-star_rating_field');
         
         $this->category = 'content';
 
