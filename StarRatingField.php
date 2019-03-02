@@ -66,6 +66,13 @@ class StarRatingField extends acf_field
             ),
             'name' => 'return_type'
         ));
+
+        acf_render_field_setting($field, array(
+            'label' => __('Allow Half Rating', 'acf-star_rating_field'),
+            'instructions' => __('Allow half ratings?', 'acf-star_rating_field'),
+            'type' => 'true_false',
+            'name' => 'allow_half'
+        ));
     }
     
     /**
@@ -86,9 +93,7 @@ class StarRatingField extends acf_field
         $dir = plugin_dir_url(__FILE__);
    
         $html = '
-            <div class="field_type-star_rating">
-                %s
-            </div>
+            <div class="field_type-star_rating">%s</div>
             <a href="#clear-stars" class="button button-small clear-button">%s</a>
             <input type="hidden" id="star-rating" name="%s" value="%s">
         ';
