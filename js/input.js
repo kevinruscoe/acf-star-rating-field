@@ -1,19 +1,18 @@
 (function($){
-	function initialize_field( $el ) {
-
+	function initialiseField( $el ) {
 		var container = $el;
 		var starList = $("ul", container);
 		var starListItems = $("li", starList);
 		var starListItemStars = $("i", starListItems);
 		var starField = $("input#star-rating", container);
 		var clearButton = $("a.clear-button", container);
-		var allowHalf = starField.data('allow-half') == 1;
+		var allowHalf = (starField.data('allow-half') == 1);
 
 		starListItems.bind("click", function(e){
 			e.preventDefault();
 
-			var star_value = $(this).index();
-			starField.val(star_value + 1);
+			var starValue = $(this).index();
+			starField.val(starValue + 1);
 			
 			if (allowHalf) {
 				var width = $(this).innerWidth();
@@ -27,16 +26,16 @@
 
 			clearActiveStarClassesFromList();
 
-			starListItems.each(function(list_index){
+			starListItems.each(function(index){
 				var icon = $('i', $(this));
-				var star_value = starField.val();
+				var starValue = starField.val();
 
-				if (list_index < star_value) {
+				if (index < starValue) {
 					icon.removeClass('fa-star-o')
 						.removeClass('fa-star-half-o')
 						.addClass('fa-star');
 
-					if (allowHalf && (list_index + .5 == star_value)) {
+					if (allowHalf && (index + .5 == starValue)) {
 						icon.addClass('fa-star-half-o')
 					}
 				}
@@ -62,17 +61,17 @@
 	
 	// Instantiate
 	if( typeof acf.add_action !== 'undefined' ) {
-		acf.add_action('ready append', function( $el ){
+		acf.add_action('ready append', function($el) {
 			acf.get_fields({
 				type: 'star_rating'
 			}, $el).each(function(){
-				initialize_field($(this));
+				initialiseField($(this));
 			});
 		});
 	} else {
-		$(document).live('acf/setup_fields', function(e, postbox){
+		$(document).live('acf/setup_fields', function(e, postbox) {
 			$(postbox).find('.field[data-field_type="star_rating"]').each(function(){
-				initialize_field($(this));
+				initialiseField($(this));
 			});
 		});
 	}
