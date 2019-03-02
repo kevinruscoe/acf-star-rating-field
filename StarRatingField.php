@@ -15,9 +15,9 @@ class StarRatingField extends acf_field
      */
     public function __construct()
     {
-        $this->name = 'star_rating';
+        $this->name = 'star_rating_field';
         
-        $this->label = __('Star Rating', 'acf-star_rating_field');
+        $this->label = __('Star Rating Field', 'acf-star_rating_field');
         
         $this->category = 'content';
 
@@ -93,7 +93,7 @@ class StarRatingField extends acf_field
         $dir = plugin_dir_url(__FILE__);
    
         $html = '
-            <div class="field_type-star_rating">%s</div>
+            <div class="field_type-star_rating_field">%s</div>
             <a href="#clear-stars" class="button button-small clear-button">%s</a>
             <input type="hidden" id="star-rating" data-allow-half="%s" name="%s" value="%s">
         ';
@@ -104,7 +104,8 @@ class StarRatingField extends acf_field
                 $field['max_stars'],
                 $field['value'],
                 '<li><i class="%s star-%d"></i></li>',
-                array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o')
+                array('fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star'),
+                $field['allow_half']
             ),
             __('Clear', 'acf-star_rating_field'),
             $field['allow_half'],
@@ -206,7 +207,8 @@ class StarRatingField extends acf_field
                     $field['max_stars'],
                     $value,
                     '<li class="%s">%d</li>',
-                    array('full', 'blank', 'half')
+                    array('blank', 'half', 'full'),
+                    $field['allow_half']
                 );
                 break;
             case 2:
@@ -218,11 +220,7 @@ class StarRatingField extends acf_field
                     "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
                 );
                 
-                $html = '
-                    <div class="field_type-star_rating">
-                        %s
-                    </div>
-                ';
+                $html = '<div class="field_type-star_rating_field">%s</div>';
                 
                 return sprintf(
                     $html,
@@ -230,7 +228,8 @@ class StarRatingField extends acf_field
                         $field['max_stars'],
                         $value,
                         '<li><i class="%s star-%d"></i></li>',
-                        array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o')
+                        array('fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star'),
+                        $field['allow_half']
                     )
                 );
                 break;
@@ -302,25 +301,25 @@ class StarRatingField extends acf_field
      *
      * Create a HTML list
      *
-     * @param int $max_stars
-     * @param int $current_start
+     * @param int $maxStars
+     * @param int $currentStart
      * @param string $li
      * @param array $classes
      * @return string $html
      */
-    public function make_list($max_stars, $current_star, $li, $classes)
+    public function make_list($maxStars = 5, $currentStar = 0, $li = '', $classes = [], $allowHalf = false)
     {
-        $is_half = $current_star != round($current_star);
-        
         $html = '<ul class="star-rating">';
         
-        for ($index = 1; $index < $max_stars + 1; $index++) {
-            $class = $classes[1];
+        for ($index = 1; $index <= $maxStars; $index++) {
+            $class = $classes[0];
 
-            if ($index <= $current_star) {
-                $class = $classes[0];
-            } elseif ($is_half && $index <= $current_star + 1) {
+            if ($index <= $currentStar) {
                 $class = $classes[2];
+            }
+
+            if ($allowHalf && ($index - .5 == $currentStar)) {
+                $class = $classes[1];
             }
 
             $html .= sprintf($li, $class, $index);

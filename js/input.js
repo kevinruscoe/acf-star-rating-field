@@ -4,7 +4,7 @@
 		var starList = $("ul", container);
 		var starListItems = $("li", starList);
 		var starListItemStars = $("i", starListItems);
-		var starField = $("input#star-rating", container);
+		var starField = $("input", container);
 		var clearButton = $("a.clear-button", container);
 		var allowHalf = (starField.data('allow-half') == 1);
 
@@ -60,19 +60,11 @@
 	}
 	
 	// Instantiate
-	if( typeof acf.add_action !== 'undefined' ) {
-		acf.add_action('ready append', function($el) {
-			acf.get_fields({
-				type: 'star_rating'
-			}, $el).each(function(){
-				initialiseField($(this));
-			});
+	acf.add_action('ready append', function($el) {
+		acf.get_fields({
+			type: 'star_rating_field'
+		}, $el).each(function(){
+			initialiseField($(this));
 		});
-	} else {
-		$(document).live('acf/setup_fields', function(e, postbox) {
-			$(postbox).find('.field[data-field_type="star_rating"]').each(function(){
-				initialiseField($(this));
-			});
-		});
-	}
+	});
 })(jQuery);
