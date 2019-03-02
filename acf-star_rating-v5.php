@@ -124,24 +124,25 @@ class acf_field_star_rating extends acf_field {
 
 		// register & include CSS
 		
-		
 		$html = '
 			<div class="field_type-star_rating">
 				%s
 			</div>
-			<a href="#clear-stars" class="button button-small clear-button">.__('Clear','acf-star_rating').</a>
+			<a href="#clear-stars" class="button button-small clear-button">%s</a>
 			<input type="hidden" id="star-rating" name="%s" value="%s">
 		';
 		
 		print sprintf(
 			$html, 
-			$this->make_list( 
+			$this->make_list(
 				$field['max_stars'], 
 				$field['value'],
 				'<li><i class="%s star-%d"></i></li>', 
 				array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o')
 			),
-			esc_attr($field['name']), esc_attr($field['value'])
+			__('Clear', 'acf-star_rating'),
+			esc_attr($field['name']), 
+			esc_attr($field['value'])
 		);
 		
 	}
