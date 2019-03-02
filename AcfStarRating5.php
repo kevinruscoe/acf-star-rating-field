@@ -197,7 +197,7 @@ class AcfStarRating5 extends acf_field
                     $field['max_stars'],
                     $value,
                     '<li class="%s">%d</li>',
-                    array('empty', 'blank', 'half')
+                    array('full', 'blank', 'half')
                 );
                 break;
             case 2:
