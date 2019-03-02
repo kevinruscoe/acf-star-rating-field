@@ -1,6 +1,6 @@
 <?php
 
-class AcfStarRating5 extends acf_field
+class StarRatingField extends acf_field
 {
     /**
      *  __construct
@@ -17,7 +17,7 @@ class AcfStarRating5 extends acf_field
     {
         $this->name = 'star_rating';
         
-        $this->label = __('Star Rating', 'acf-star_rating');
+        $this->label = __('Star Rating', 'acf-star_rating_field');
         
         $this->category = 'content';
 
@@ -26,7 +26,7 @@ class AcfStarRating5 extends acf_field
         );
         
         $this->l10n = array(
-            'error' => __('Error! Please enter a higher value', 'acf-star_rating'),
+            'error' => __('Error! Please enter a higher value', 'acf-star_rating_field'),
         );
 
         parent::__construct();
@@ -48,15 +48,15 @@ class AcfStarRating5 extends acf_field
     public function render_field_settings($field)
     {
         acf_render_field_setting($field, array(
-            'label' => __('Maximum Rating', 'acf-star_rating'),
-            'instructions' => __('Maximum number of stars', 'acf-star_rating'),
+            'label' => __('Maximum Rating', 'acf-star_rating_field'),
+            'instructions' => __('Maximum number of stars', 'acf-star_rating_field'),
             'type' => 'number',
             'name' => 'max_stars'
         ));
 
         acf_render_field_setting($field, array(
-            'label' => __('Return Type', 'acf-star_rating'),
-            'instructions' => __('What should be returned?', 'acf-star_rating'),
+            'label' => __('Return Type', 'acf-star_rating_field'),
+            'instructions' => __('What should be returned?', 'acf-star_rating_field'),
             'type' => 'select',
             'layout' => 'horizontal',
             'choices' => array(
@@ -101,7 +101,7 @@ class AcfStarRating5 extends acf_field
                 '<li><i class="%s star-%d"></i></li>',
                 array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o')
             ),
-            __('Clear', 'acf-star_rating'),
+            __('Clear', 'acf-star_rating_field'),
             esc_attr($field['name']),
             esc_attr($field['value'])
         );
@@ -124,7 +124,10 @@ class AcfStarRating5 extends acf_field
         $dir = plugin_dir_url(__FILE__);
         
         wp_enqueue_script('acf-input-star_rating', "{$dir}js/input.js");
-        wp_enqueue_style('font-awesome', "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
+        wp_enqueue_style(
+            'font-awesome',
+            "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+        );
         wp_enqueue_style('acf-input-star_rating', "{$dir}css/input.css");
     }
 
@@ -248,7 +251,7 @@ class AcfStarRating5 extends acf_field
     public function validate_value($valid, $value, $field, $input)
     {
         if ($value > $field['max_stars']) {
-            $valid = __('The value is too large!', 'acf-star_rating');
+            $valid = __('The value is too large!', 'acf-star_rating_field');
         }
         
         return $valid;
@@ -305,7 +308,7 @@ class AcfStarRating5 extends acf_field
         
         $html = '<ul class="star-rating">';
         
-        for ($index = 1; $index < $max_stars + 1; $index++) :
+        for ($index = 1; $index < $max_stars + 1; $index++) {
             $class = $classes[1];
 
             if ($index <= $current_star) {
@@ -315,7 +318,7 @@ class AcfStarRating5 extends acf_field
             }
 
             $html .= sprintf($li, $class, $index);
-        endfor;
+        }
                 
         $html .= "</ul>";
         
