@@ -95,7 +95,7 @@ class StarRatingField extends acf_field
         $html = '
             <div class="field_type-star_rating">%s</div>
             <a href="#clear-stars" class="button button-small clear-button">%s</a>
-            <input type="hidden" id="star-rating" name="%s" value="%s">
+            <input type="hidden" id="star-rating" data-allow-half="%s" name="%s" value="%s">
         ';
         
         print sprintf(
@@ -107,6 +107,7 @@ class StarRatingField extends acf_field
                 array('fa fa-star', 'fa fa-star-o', 'fa fa-star-half-o')
             ),
             __('Clear', 'acf-star_rating_field'),
+            $field['allow_half'],
             esc_attr($field['name']),
             esc_attr($field['value'])
         );

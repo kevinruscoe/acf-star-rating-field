@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Advanced Custom Fields: Star Rating Field
  * Plugin URI: https://github.com/kevdotbadger/acf-star-rating
- * Description: A simple star rating field for ACF.
+ * Description: A simple Star Rating Field for Advanced Custom Fields.
  * Version: 1.0.2
  * Author: Kevin Ruscoe
  * License: GPLv2 or later
