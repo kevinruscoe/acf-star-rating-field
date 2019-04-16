@@ -40,3 +40,7 @@ for ($i = 0; $i < $rating; $i++) {
 
 ## PR very much welcome!
 Bugs fixes are very much welcome. If you have a feature request, please open an issue before writing your code!
+
+## Need this tweaking?
+
+Drop me an email hello@kevinruscoe.me and we'll sort something out.
