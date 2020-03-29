@@ -1,6 +1,31 @@
 .edit-post-meta-boxes-area {
     .acf-star-field-ui {
-        &__button {
+        display: flex;
+        align-items: center;
+
+        &__clear-button {
+            margin-left: 2rem;
+            height: 2rem;
+            padding: 0 1rem;
+            color: rgb(0, 117, 175);
+            border-color: rgb(0, 117, 175);
+            background: rgb(243, 245, 246);
+            border-radius: 3px;
+            white-space: nowrap;
+            border-width: 1px;
+            border-style: solid;
+            font-size: 13px;
+            cursor: pointer;
+
+            &:hover {
+                background: rgb(241, 241, 241);
+                border-color: rgb(0, 93, 140);
+                color: rgb(0, 93, 140);
+                text-decoration: none;
+            }
+        }
+
+        &__star-button {
             width: 2rem;
             height: 2rem;
             display: inline-flex;
