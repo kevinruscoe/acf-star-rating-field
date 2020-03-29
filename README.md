@@ -1,15 +1,9 @@
------------------------
-
 # ACF Star Rating Field
+
+Welcome to the Advanced Custom Fields Star Rating repository on Github.
 
 A simple star rating field for ACF.
 
------------------------
-
-## Compatibility
-
-This ACF field type is compatible with:
-* ACF 5
 
 ## Usage
 
