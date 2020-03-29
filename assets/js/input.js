@@ -15,6 +15,8 @@
 	
 	function initialize_field( $field ) {
 
+		// TODO: Deal with .5 max values
+
 		var input = $("input", $field);
 		var max_stars = input.data('max_stars');
 		var allow_half = input.data('allow_half');

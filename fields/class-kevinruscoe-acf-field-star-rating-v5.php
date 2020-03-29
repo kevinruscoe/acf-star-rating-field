@@ -85,21 +85,24 @@ class kevinruscoe_acf_field_star_rating extends acf_field
         ));
 
         acf_render_field_setting($field, array(
+            'label' => __('Allow Half Rating', 'acf-star_rating_field'),
+            'instructions' => __('Allow half step ratings?', 'acf-star_rating_field'),
+            'type' => 'true_false',
+            'name' => 'allow_half'
+        ));
+
+        acf_render_field_setting($field, array(
             'label' => __('Return Type', 'acf-star_rating_field'),
             'instructions' => __('What should be returned?', 'acf-star_rating_field'),
             'type' => 'select',
             'layout' => 'horizontal',
             'choices' => array(
-                '0'  => __('value', 'value'),
+                '0'  => 'value',
+                '1'  => 'Font Awesome 4',
+                '2'  => 'Font Awesome 5',
+                '3'  => 'SVGs',
             ),
             'name' => 'return_type'
-        ));
-
-        acf_render_field_setting($field, array(
-            'label' => __('Allow Half Rating', 'acf-star_rating_field'),
-            'instructions' => __('Allow half step ratings?', 'acf-star_rating_field'),
-            'type' => 'true_false',
-            'name' => 'allow_half'
         ));
 	}
 
