@@ -1,7 +1,7 @@
 {
     "name": "kevinruscoe/acf-star-rating-field",
     "description": "A simple star rating field for ACF.",
-    "type": "acf-plugin",
+    "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
         {
