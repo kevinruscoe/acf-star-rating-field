@@ -7,6 +7,9 @@
 		var starField = $("input", container);
 		var clearButton = $("a.clear-button", container);
 		var allowHalf = (starField.data('allow-half') == 1);
+		var emptyClass = window.starClasses[0];
+		var halfClass = window.starClasses[1];
+		var fullClass = window.starClasses[2];
 
 		starListItems.bind("click", function(e){
 			e.preventDefault();
@@ -31,12 +34,13 @@
 				var starValue = starField.val();
 
 				if (index < starValue) {
-					icon.removeClass('fa-star-o')
-						.removeClass('fa-star-half-o')
-						.addClass('fa-star');
+					icon.removeClass(emptyClass)
+						.removeClass(halfClass)
+						.addClass(fullClass);
 
 					if (allowHalf && (index + .5 == starValue)) {
-						icon.addClass('fa-star-half-o')
+						icon.removeClass(fullClass);
+						icon.addClass(halfClass);
 					}
 				}
 			});
@@ -53,9 +57,9 @@
 		function clearActiveStarClassesFromList()
 		{
 			starListItemStars
-				.removeClass('fa-star')
-				.removeClass('fa-star-half-o')
-				.addClass('fa-star-o');
+				.removeClass(fullClass)
+				.removeClass(halfClass)
+				.addClass(emptyClass);
 		}	
 	}
 	

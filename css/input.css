@@ -2,4 +2,3 @@ div.field_type-star_rating_field {clear:both;}
 div.field_type-star_rating_field ul.star-rating {list-style:none;padding:0;font-size:16px;cursor:pointer;}
 div.field_type-star_rating_field ul.star-rating li {line-height:1.6em;float:left;padding-right:5px;}
 div.field_type-star_rating_field ul.star-rating li i {cursor:pointer;}
-div.field_type-star_rating_field a.clear-button {}

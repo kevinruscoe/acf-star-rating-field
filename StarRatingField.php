@@ -90,13 +90,25 @@ class StarRatingField extends acf_field
      */
     public function render_field($field)
     {
-        $dir = plugin_dir_url(__FILE__);
-   
         $html = '
             <div class="field_type-star_rating_field">%s</div>
             <a href="#clear-stars" class="button button-small clear-button">%s</a>
             <input type="hidden" id="star-rating" data-allow-half="%s" name="%s" value="%s">
         ';
+
+        $starClasses = apply_filters(
+            'star_rating_field_admin_star_classes',
+            array('fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star')
+        );
+
+        if (count($starClasses) !== 3) {
+            return "Error: 3 classes are required to display rating field: blank class, half class and full class.";
+        }
+
+        printf(
+            '<script>window.starClasses = %s</script>',
+            json_encode($starClasses)
+        );
         
         print sprintf(
             $html,
@@ -104,7 +116,7 @@ class StarRatingField extends acf_field
                 $field['max_stars'],
                 $field['value'],
                 '<li><i class="%s star-%d"></i></li>',
-                array('fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star'),
+                $starClasses,
                 $field['allow_half']
             ),
             __('Clear', 'acf-star_rating_field'),
