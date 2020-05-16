@@ -271,6 +271,10 @@ class StarRatingField extends acf_field
             $valid = __('The value is too large!', 'acf-star_rating_field');
         }
         
+        if ( $field['required'] == 1 && $value == 0 ) {
+            $valid = sprintf( __('Please enter a value clicking on stars form 1 to %s', 'acf-star_rating_field'), $field['max_stars']);
+        }
+        
         return $valid;
     }
     
