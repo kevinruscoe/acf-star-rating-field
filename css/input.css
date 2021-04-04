@@ -3,5 +3,5 @@ div.field_type-star_rating_field ul.star-rating {list-style:none;padding:0;font-
 div.field_type-star_rating_field ul.star-rating li {float:left;margin-right:5px;margin-bottom:0;}
 div.field_type-star_rating_field ul.star-rating li:last-child {margin-right:15px;}
 div.field_type-star_rating_field ul.star-rating li i {cursor:pointer;}
-div.field_type-star_rating_field.theme-color ul.star-rating li i { color: #fbb034; color: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%); }
+div.field_type-star_rating_field.theme-color ul.star-rating li i { color: #fbb034; background: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);-webkit-background-clip: text;-webkit-text-fill-color: transparent; }
 .wp-core-ui .btn-star-clear { line-height: 30px;color: #2271b1;border: 1px solid #2271b1;background: #f6f7f7;border-radius:3px;text-decoration:none;padding:0 10px;height:30px;margin-top:1px;display:inline-flex; }
