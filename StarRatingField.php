@@ -73,6 +73,17 @@ class StarRatingField extends acf_field
             'type' => 'true_false',
             'name' => 'allow_half'
         ));
+		
+		acf_render_field_setting($field, array(
+            'label' => __('Theme', 'acf-star_rating_field'),
+            'instructions' => __('Select theme?', 'acf-star_rating_field'),
+            'type' => 'select',
+			'choices' => array(
+                'default'  => __('Default', 'default'),
+                'color' => __('Color', 'color'),
+            ),
+            'name' => 'theme'
+        ));
     }
     
     /**
@@ -90,9 +101,10 @@ class StarRatingField extends acf_field
      */
     public function render_field($field)
     {
+		
         $html = '
-            <div class="field_type-star_rating_field">%s</div>
-            <a href="#clear-stars" class="button button-small clear-button">%s</a>
+            <div class="field_type-star_rating_field theme-' . $field['theme'] . '">%s</div>
+            <a href="#clear-stars" class="btn-star-clear clear-button">%s</a>
             <input type="hidden" id="star-rating" data-allow-half="%s" name="%s" value="%s">
         ';
 
