@@ -44,6 +44,8 @@
 					}
 				}
 			});
+
+			starField.trigger("change");
 		});
 
 		clearButton.bind("click", function(e){
@@ -52,6 +54,8 @@
 			clearActiveStarClassesFromList();
 
 			starField.val(0);
+
+			starField.trigger("change");
 		});
 
 		function clearActiveStarClassesFromList()
