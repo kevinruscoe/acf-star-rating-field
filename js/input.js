@@ -11,9 +11,44 @@
 		var halfClass = window.starClasses[1];
 		var fullClass = window.starClasses[2];
 
+		starListItems.mouseenter(function ()
+		{
+			var starValue = $(this).index();
+			starField.val(starValue + 1);
+
+					starListItems.each(function(index){
+						starListItems[index].children[0].setAttribute('clicked', 'no'); 
+						var starValue = starField.val();
+						if (index < starValue) {
+							if($(this).children()[0].classList.contains('empty'))
+							{
+						starListItems[index].children[0].removeAttribute("class", emptyClass);
+						starListItems[index].children[0].setAttribute("class", fullClass);
+							}
+						}
+					});
+			
+		});
+
+		starListItems.mouseleave(function ()
+		{
+			if($(this).children().attr('clicked') != 'yes')
+			{
+			for(let x = 0; x < starListItems.length;x++)
+			{
+				starListItems[x].children[0].removeAttribute("class", fullClass);
+				starListItems[x].children[0].setAttribute("class", emptyClass);
+			}
+			}	
+		});
+
+
+
+
+
 		starListItems.bind("click", function(e){
 			e.preventDefault();
-
+			$(this).children().attr('clicked', 'yes'); 
 			var starValue = $(this).index();
 			starField.val(starValue + 1);
 			
