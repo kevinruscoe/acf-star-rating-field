@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ACF Star Rating Field\n"
 "POT-Creation-Date: 2024-04-16 11:48+0200\n"
-"PO-Revision-Date: 2024-04-16 12:01+0200\n"
+"PO-Revision-Date: 2024-04-16 12:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: https://github.com/kevinruscoe/acf-star-rating-field\n"
 "Language: ca\n"
@@ -60,7 +60,7 @@ msgstr "Voleu permetre la meitat a les puntuacions?"
 
 #: StarRatingField.php:78
 msgid "Theme"
-msgstr "TemaTema"
+msgstr "Tema"
 
 #: StarRatingField.php:79
 msgid "Select theme?"
