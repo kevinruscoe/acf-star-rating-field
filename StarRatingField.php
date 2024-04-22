@@ -104,13 +104,13 @@ class StarRatingField extends acf_field
 		
         $html = '
             <div class="field_type-star_rating_field theme-' . $field['theme'] . '">%s</div>
-            <a href="#clear-stars" class="btn-star-clear clear-button">%s</a>
+             <a href="#clear-stars" class="btn-star-clear clear-button">%s</a>
             <input type="hidden" id="star-rating" data-allow-half="%s" name="%s" value="%s">
         ';
 
         $starClasses = apply_filters(
             'star_rating_field_admin_star_classes',
-            array('fa fa-star-o', 'fa fa-star-half-o', 'fa fa-star')
+            array('fa fa-star-o empty', 'fa fa-star-half-o', 'fa fa-star full')
         );
 
         if (count($starClasses) !== 3) {
@@ -122,12 +122,13 @@ class StarRatingField extends acf_field
             json_encode($starClasses)
         );
         
+
         print sprintf(
             $html,
             $this->make_list(
                 $field['max_stars'],
                 $field['value'],
-                '<li><i class="%s star-%d"></i></li>',
+                '<li><i class="%s star-%d" id="rating"></i></li>',
                 $starClasses,
                 $field['allow_half']
             ),
