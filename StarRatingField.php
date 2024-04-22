@@ -153,8 +153,11 @@ class StarRatingField extends acf_field
     public function input_admin_enqueue_scripts()
     {
         $dir = plugin_dir_url(__FILE__);
-        
-        wp_enqueue_script('acf-input-star_rating', "{$dir}js/input.js");
+        //https://github.com/jonpxpx/acf-star-rating-field/blob/66734ccb957e4dd41f858322a10c1ea6f52df503/StarRatingField.php#L157
+        //https://github.com/kevinruscoe/acf-star-rating-field/issues/55#issuecomment-2023004441
+        if( get_post_type() !== 'acf-field-group' ){
+          wp_enqueue_script('acf-input-star_rating', "{$dir}js/input.js");
+        }
         wp_enqueue_style(
             'font-awesome',
             "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"

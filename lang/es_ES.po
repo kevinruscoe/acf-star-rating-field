@@ -1,0 +1,88 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ACF Star Rating Field\n"
+"POT-Creation-Date: 2024-04-16 11:48+0200\n"
+"PO-Revision-Date: 2024-04-16 11:54+0200\n"
+"Last-Translator: \n"
+"Language-Team: https://github.com/kevinruscoe/acf-star-rating-field\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: StarRatingField.php:20
+msgid "Star Rating"
+msgstr "Puntuación estrellas"
+
+#: StarRatingField.php:29
+msgid "Error! Please enter a higher value"
+msgstr "¡Error! Por favor introduce un valor mayor"
+
+#: StarRatingField.php:51
+msgid "Maximum Rating"
+msgstr "Puntuación máxima"
+
+#: StarRatingField.php:52
+msgid "Maximum number of stars"
+msgstr "Número máximo de estrellas"
+
+#: StarRatingField.php:58
+msgid "Return Type"
+msgstr "Tipo de retorno"
+
+#: StarRatingField.php:59
+msgid "What should be returned?"
+msgstr "¿Que debería devolver?"
+
+#: StarRatingField.php:63
+msgid "Number"
+msgstr "Número"
+
+#: StarRatingField.php:64
+msgid "List (unstyled)"
+msgstr "Lista (sin estilos)"
+
+#: StarRatingField.php:65
+msgid "List (fa-awesome)"
+msgstr "Lista (fa-awesome)"
+
+#: StarRatingField.php:71
+msgid "Allow Half Rating"
+msgstr "Permitir media puntuación"
+
+#: StarRatingField.php:72
+msgid "Allow half ratings?"
+msgstr "¿Quieres permitir medias puntuaciones?"
+
+#: StarRatingField.php:78
+msgid "Theme"
+msgstr "Tema"
+
+#: StarRatingField.php:79
+msgid "Select theme?"
+msgstr "¿Seleccionar el tema?"
+
+#: StarRatingField.php:82
+msgid "Default"
+msgstr "Por defecto"
+
+#: StarRatingField.php:83
+msgid "Color"
+msgstr "Color"
+
+#: StarRatingField.php:134
+msgid "Clear"
+msgstr "Limpiar"
+
+#: StarRatingField.php:286
+msgid "The value is too large!"
+msgstr "¡El valor es demasiado alto!"
+
+#: StarRatingField.php:290
+#, php-format
+msgid "Please enter a value clicking on stars form 1 to %s"
+msgstr "Por favor, introduce un valor haciendo clic en las estrellas desde la 1 hasta %s"
